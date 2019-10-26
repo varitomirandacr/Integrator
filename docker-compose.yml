@@ -1,15 +1,17 @@
 version: '3.4'
 
 services:
+  integrator:
+    image: ${DOCKER_REGISTRY-}integrator
+    build:
+      context: .
+      dockerfile: Integrator\Dockerfile
+
   virusservices:
     image: ${DOCKER_REGISTRY-}virusservices
     build:
       context: .
       dockerfile: VirusServices\Dockerfile
 
-  integrator:
-    image: ${DOCKER_REGISTRY-}integrator
-    build:
-      context: .
-      dockerfile: Integrator\Dockerfile
+  
 
