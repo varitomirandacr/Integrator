@@ -5,22 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Integrator.Models;
+using Integrator.Base;
+using System.Net.NetworkInformation;
+using Infrastructure;
+using NS = NetworkService.Services;
 
 namespace Integrator.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : IntegratorControllerBase
     {
         public async Task<IActionResult> Index()
         {
-            using (var client = new System.Net.Http.HttpClient())
-            {
-                // Call *mywebapi*, and display its response in the page
-                var request = new System.Net.Http.HttpRequestMessage();
-                request.RequestUri = new Uri("http://virusservices20191026023616.azurewebsites.net/api/values");
-                var response = await client.SendAsync(request);
-                var result = await response.Content.ReadAsStringAsync();
-                ViewData["Message"] += " and " + Json(result).Value;
-            }
+            List<IIntegratorService> services = new List<IIntegratorService>();
+            services.Add(new NS.NetworkService());
+            var result = await RequestClient<PingReply>("http://networkservice/api/network/google.com");
 
             return View();
         }

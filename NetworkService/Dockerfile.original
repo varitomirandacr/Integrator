@@ -7,17 +7,17 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-nanoserver-1803 AS build
 WORKDIR /src
-COPY ["NetworkService/NetworkService.csproj", "NetworkService/"]
+COPY ["NetworkService/NetworkServiceAPI.csproj", "NetworkService/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-RUN dotnet restore "NetworkService/NetworkService.csproj"
+RUN dotnet restore "NetworkService/NetworkServiceAPI.csproj"
 COPY . .
 WORKDIR "/src/NetworkService"
-RUN dotnet build "NetworkService.csproj" -c Release -o /app/build
+RUN dotnet build "NetworkServiceAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "NetworkService.csproj" -c Release -o /app/publish
+RUN dotnet publish "NetworkServiceAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "NetworkService.dll"]
+ENTRYPOINT ["dotnet", "NetworkServiceAPI.dll"]
