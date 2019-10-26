@@ -13,5 +13,9 @@ services:
       context: .
       dockerfile: VirusServices\Dockerfile
 
-  
+  networkservice:
+    image: ${DOCKER_REGISTRY-}networkservice
+    build:
+      context: .
+      dockerfile: NetworkService\Dockerfile
 
