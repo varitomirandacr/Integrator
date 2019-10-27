@@ -17,9 +17,13 @@ namespace Integrator.Controllers
         public async Task<IActionResult> Index()
         {
             List<IIntegratorService> services = new List<IIntegratorService>();
-            services.Add(new NS.NetworkService());
-            var result = await RequestClient<PingReply>("http://networkservice/api/network/google.com");
+            services.Add(new NS.PingReplyService());
+            //var result = await RequestClient("http://networkservice/api/network/google.com");
 
+            //var targetHost = "http://networkservice20191026025909.azurewebsites.net/api/network/google.com";
+            var targetHost = "http://networkservice/api/network/google.com";
+            var result = await RequestClient(targetHost);
+            //
             return View();
         }
 

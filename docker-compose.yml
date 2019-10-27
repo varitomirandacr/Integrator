@@ -7,15 +7,16 @@ services:
       context: .
       dockerfile: Integrator\Dockerfile
 
-  virusservices:
-    image: ${DOCKER_REGISTRY-}virusservices
-    build:
-      context: .
-      dockerfile: VirusServices\Dockerfile
-
   networkservice:
     image: ${DOCKER_REGISTRY-}networkservice
     build:
       context: .
       dockerfile: NetworkService\Dockerfile
+
+
+  virusservices:
+    image: ${DOCKER_REGISTRY-}virusservices
+    build:
+      context: .
+      dockerfile: VirusServices\Dockerfile
 

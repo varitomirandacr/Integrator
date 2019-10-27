@@ -7,15 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator", "Integrator\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirusServices", "VirusServices\VirusServices.csproj", "{23ACE41C-DDB0-4F1A-AD44-66DD823CEB73}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B28E9B37-A74F-4DCD-9811-8FA9BDB13398}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkService", "NetworkService\NetworkService.csproj", "{E2BD8CEC-6EA8-46FA-B88E-2946087A176E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkService", "NetworkService\NetworkService.csproj", "{E2BD8CEC-6EA8-46FA-B88E-2946087A176E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{13563880-4F91-45FB-89FD-38592281D192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkServiceTest", "Tests\NetworkServiceTest\NetworkServiceTest.csproj", "{ADA964B7-2F8C-4D9A-B97B-CFC33188149E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkServiceTest", "Tests\NetworkServiceTest\NetworkServiceTest.csproj", "{ADA964B7-2F8C-4D9A-B97B-CFC33188149E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DB5F4C7C-FE77-4142-9105-793D1B2319EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DB5F4C7C-FE77-4142-9105-793D1B2319EA}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4AD85865-9E8F-42B4-8808-661F7C8B46A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{23ACE41C-DDB0-4F1A-AD44-66DD823CEB73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23ACE41C-DDB0-4F1A-AD44-66DD823CEB73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23ACE41C-DDB0-4F1A-AD44-66DD823CEB73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B28E9B37-A74F-4DCD-9811-8FA9BDB13398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B28E9B37-A74F-4DCD-9811-8FA9BDB13398}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B28E9B37-A74F-4DCD-9811-8FA9BDB13398}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B28E9B37-A74F-4DCD-9811-8FA9BDB13398}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2BD8CEC-6EA8-46FA-B88E-2946087A176E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2BD8CEC-6EA8-46FA-B88E-2946087A176E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2BD8CEC-6EA8-46FA-B88E-2946087A176E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +43,10 @@ Global
 		{DB5F4C7C-FE77-4142-9105-793D1B2319EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB5F4C7C-FE77-4142-9105-793D1B2319EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB5F4C7C-FE77-4142-9105-793D1B2319EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,8 +9,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-nanoserver-1803 AS build
 WORKDIR /src
 COPY ["Integrator/Integrator.csproj", "Integrator/"]
-COPY ["NetworkService/NetworkService.csproj", "NetworkService/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
 RUN dotnet restore "Integrator/Integrator.csproj"
 COPY . .
 WORKDIR "/src/Integrator"
