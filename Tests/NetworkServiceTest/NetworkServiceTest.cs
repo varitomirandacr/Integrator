@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetworkService.Model;
+using NetworkService.Models;
 using NetworkService.Services;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace IntegratorTest
 {
     [TestClass]
-    public class NetworkServiceTest
+    public class NetworkServiceTest : TestBase
     {
         [TestMethod]
         public void Test_NetworkService_ExecuteICMP()
@@ -16,7 +17,7 @@ namespace IntegratorTest
             string targetHost = "google.com";
             string family = "InterNetwork";
 
-            PingReplyService service = new PingReplyService();
+            PingReplyService service = new PingReplyService(this.MockAppSettings.Object);
 
             NetworkReply result = Task.Run(async () =>
             {
@@ -33,35 +34,71 @@ namespace IntegratorTest
 
             Assert.AreEqual(result.AddressFamily.ToString(), family);
             Assert.IsTrue(result.Status);
+
+            this.VerifyAndTearDown();
         }
 
         [TestMethod]
-        public void Test_NetworkService_DnsLookup()
+        public void Test_NetworkService_ExecuteDnsResolver()
+        {
+            // Using google information 
+            string targetHost = "google.com";
+
+            PingReplyService service = new PingReplyService(this.MockAppSettings.Object);
+
+            NetworkDnsResolver resolver = Task.Run(async () =>
+            {
+                return await service.ExecuteDnsResolver(targetHost);
+            })
+            .GetAwaiter()
+            .GetResult();
+
+            Assert.IsNotNull(resolver);
+            Assert.IsFalse(string.IsNullOrEmpty(resolver.Result));
+            Assert.IsTrue(string.IsNullOrEmpty(resolver.Message));
+            Assert.IsTrue(string.IsNullOrEmpty(resolver.StackTrace));
+
+            this.VerifyAndTearDown();
+        }
+
+        [TestMethod]
+        public void Test_NetworkService_DnsChilkatLookup()
         {
             string target = "google.com";
 
             DnsLookupService service = new DnsLookupService();
 
-            string result = service.DnsLookup(target);
-            
-            Assert.IsFalse(string.IsNullOrEmpty(result));
+            NetworkDnsQueryLookup lookup = Task.Run(async () =>
+            {
+                return await service.DnsChilkatLookup(target);
+            })
+            .GetAwaiter()
+            .GetResult();
+
+            Assert.IsNotNull(lookup);
+            Assert.IsFalse(string.IsNullOrEmpty(lookup.IpAddress));
+            Assert.IsTrue(string.IsNullOrEmpty(lookup.Message));
+            Assert.IsTrue(string.IsNullOrEmpty(lookup.StackTrace));
         }
 
         [TestMethod]
-        public void Test_NetworkService_DnsClient()
+        public void Test_NetworkService_DnsClientLookup()
         {
             string target = "google.com";
 
             DnsLookupService service = new DnsLookupService();
 
-            NetworkLookup result = Task.Run(async () => 
+            NetworkDnsClientLookup lookup = Task.Run(async () => 
             { 
                 return await service.DnsClientLookup(target); 
             })
             .GetAwaiter()
             .GetResult();
 
-            Assert.IsFalse(string.IsNullOrEmpty(result.IpAddress));
+            Assert.IsNotNull(lookup);
+            Assert.IsFalse(string.IsNullOrEmpty(lookup.IpAddress));
+            Assert.IsTrue(string.IsNullOrEmpty(lookup.Message));
+            Assert.IsTrue(string.IsNullOrEmpty(lookup.StackTrace));
         }
     }
 }

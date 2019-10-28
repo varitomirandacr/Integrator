@@ -37,6 +37,21 @@ namespace Infrastructure.Extensions
             }
         }
 
+        public static async Task<T> SendHttpRequestAsync<T>(this IRequestService service, Uri uri) where T : class
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var request = new System.Net.Http.HttpRequestMessage
+                {
+                    RequestUri = new Uri(uri.AbsoluteUri)
+                };
+
+                var response = await client.SendAsync(request);
+
+                return await DeserializeHttpContent<T>(response);
+            }
+        }
+
         private static async Task<T> DeserializeHttpContent<T>(HttpResponseMessage response) where T : class
         {
             var content = await response.Content.ReadAsStringAsync();

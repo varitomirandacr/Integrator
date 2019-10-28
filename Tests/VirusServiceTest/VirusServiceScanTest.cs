@@ -1,14 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using VirusService.Converters;
-using VirusService.Models;
 using VirusService.Services;
-using static VirusService.Models.Scan;
 
 namespace VirusServiceTest
 {
@@ -23,18 +16,16 @@ namespace VirusServiceTest
 
             ScanService service = new ScanService();
 
-            string result = Task.Run(async () =>
+            var result = Task.Run(async () =>
             {
                 return await service.ScanWebsite(website);
             })
             .GetAwaiter()
             .GetResult();
 
-            var urlScan = JsonScanParser.Parse(result);
-
-            Assert.IsNotNull(urlScan);
-            Assert.IsFalse(urlScan.HasErrors);
-            Assert.IsTrue(string.IsNullOrEmpty(urlScan.ErrorMessage));
+            Assert.IsNotNull(result);
+            Assert.IsFalse(result.HasErrors);
+            Assert.IsTrue(string.IsNullOrEmpty(result.ErrorMessage));
         }
 
         [TestMethod]
@@ -47,7 +38,7 @@ namespace VirusServiceTest
             
             try
             {
-                string result = Task.Run(async () =>
+                var result = Task.Run(async () =>
                 {
                     return await service.ScanWebsite(website);
                 })

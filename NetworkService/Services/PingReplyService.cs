@@ -4,6 +4,7 @@ using Infrastructure.Models;
 using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
 using NetworkService.Model;
+using NetworkService.Models;
 using System;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -65,13 +66,13 @@ namespace NetworkService.Services
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public async Task<string> QueryDns(string target)
+        public async Task<NetworkDnsResolver> ExecuteDnsResolver(string target)
         {
             var targetHost = $"{_settings.Value.QueryDnsUrl}{target}";
 
             targetHost.ValidateUrl(out Uri result);
 
-            return await this.SendHttpRequestAsync(result);
+            return await this.SendHttpRequestAsync<NetworkDnsResolver>(result);
         }
     }
 }

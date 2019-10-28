@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace NetworkService.Model
 {
     [Serializable]
-    public class NetworkLookup : IEntityService
+    public class NetworkDnsClientLookup : IEntityService
     {
         public string DomainName { get; set; }
         public string IpAddress { get; set; }

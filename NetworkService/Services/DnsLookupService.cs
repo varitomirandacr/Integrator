@@ -2,6 +2,7 @@
 using Infrastructure.Contracts;
 using NetworkService.Contracts;
 using NetworkService.Model;
+using NetworkService.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,28 +20,28 @@ namespace NetworkService.Services
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public string DnsLookup(string target)
+        public async Task<NetworkDnsQueryLookup> DnsChilkatLookup(string target)
         {
             Chilkat.Socket socket = new Chilkat.Socket();
             socket.UnlockComponent("unlock_code");
 
             int milliseconds = 10000;
-            var address = socket.DnsLookup(target, milliseconds);
+            var address = await Task.Run(() => { return socket.DnsLookupAsync(target, milliseconds).GetResultString(); });
 
-            var networkLookup = new NetworkLookup
+            var networkDnsQueryLookup = new NetworkDnsQueryLookup
             {
                 IpAddress = address,
             };
 
-            Debug.Assert(!string.IsNullOrEmpty(networkLookup.IpAddress), "IP Address empty? Why?");
+            Debug.Assert(!string.IsNullOrEmpty(networkDnsQueryLookup.IpAddress), "IP Address empty? Why?");
 
-            if (socket.LastMethodSuccess != true)
+            if (!socket.LastMethodSuccess)
             {
                 Debug.WriteLine(socket.LastErrorText);
-                return string.Empty;
+                return default;
             }
 
-            return networkLookup.IpAddress;
+            return networkDnsQueryLookup;
         }
 
         /// <summary>
@@ -48,13 +49,13 @@ namespace NetworkService.Services
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public async Task<NetworkLookup> DnsClientLookup(string target)
+        public async Task<NetworkDnsClientLookup> DnsClientLookup(string target)
         {
             var lookup = new LookupClient();
             var result = await lookup.QueryAsync(target, QueryType.ANY);
 
             var record = result.Answers.ARecords()
-                .Select(x => new NetworkLookup
+                .Select(x => new NetworkDnsClientLookup
                 {
                     IpAddress = x?.Address.ToString(),
                     DomainName = x?.DomainName

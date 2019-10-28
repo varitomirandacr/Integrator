@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
 using NetworkService.Model;
+using NetworkService.Models;
 using NetworkService.Services;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,10 @@ namespace NetworkService.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Network/target
-        [HttpGet("{target}", Name = "Get")]
-        public async Task<NetworkReply> Get(string target)
+        // GET: api/Network/icmp/target
+        [HttpGet]
+        [Route("[action]/{target}")]
+        public async Task<NetworkReply> Icmp(string target)
         {
             NetworkReply reply = new NetworkReply();
 
@@ -57,36 +59,36 @@ namespace NetworkService.Controllers
             return reply;
         }
 
-        // GET: api/Network/dns/target
+        // GET: api/Network/dnsresolver/target
         [HttpGet]
         [Route("[action]/{target}")]
-        public async Task<string> DnsLookup(string target)
+        public async Task<NetworkDnsResolver> DnsResolver(string target)
         {
+            NetworkDnsResolver resolver = new NetworkDnsResolver();
+
             try
             {
-                return await Task.Run(() =>
-                {
-                    return this._dnsLookupService.DnsLookup(target);
-                });
+                resolver = await this._pingReplyService.ExecuteDnsResolver(target);
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                resolver.Message = ex.Message;
+                resolver.StackTrace = ex.StackTrace;
             }
+
+            return resolver;
         }
 
+        // GET: api/Network/dnschilkatlookup/target
         [HttpGet]
         [Route("[action]/{target}")]
-        public async Task<NetworkLookup> DnsClient(string target)
+        public async Task<NetworkDnsQueryLookup> DnsChilkatLookup(string target)
         {
-            NetworkLookup lookup = new NetworkLookup();
+            NetworkDnsQueryLookup lookup = new NetworkDnsQueryLookup();
 
             try
             {
-                lookup = await Task.Run(() =>
-                {
-                    return this._dnsLookupService.DnsClientLookup(target);
-                });
+                lookup = await this._dnsLookupService.DnsChilkatLookup(target);
             }
             catch (Exception ex)
             {
@@ -97,11 +99,24 @@ namespace NetworkService.Controllers
             return lookup;
         }
 
+        // GET: api/Network/dnsclientlookup/target
         [HttpGet]
         [Route("[action]/{target}")]
-        public async Task<string> QueryDns(string target)
+        public async Task<NetworkDnsClientLookup> DnsClientLookup(string target)
         {
-            return await this._pingReplyService.QueryDns(target);
-        }
+            NetworkDnsClientLookup lookup = new NetworkDnsClientLookup();
+
+            try
+            {
+                lookup = await this._dnsLookupService.DnsClientLookup(target);
+            }
+            catch (Exception ex)
+            {
+                lookup.Message = ex.Message;
+                lookup.StackTrace = ex.StackTrace;
+            }
+
+            return lookup;
+        }        
     }
 }
