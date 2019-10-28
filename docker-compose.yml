@@ -20,3 +20,10 @@ services:
       context: .
       dockerfile: VirusServices\Dockerfile
 
+
+  locationservice:
+    image: ${DOCKER_REGISTRY-}locationservice
+    build:
+      context: .
+      dockerfile: LocationService\Dockerfile
+
