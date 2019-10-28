@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace VirusService.Models
 {
-    public class UrlScan
+    public class Scan
     {
         public string Title { get; set; }
         public string Term { get; set; }
@@ -24,7 +24,7 @@ namespace VirusService.Models
         public string StackTrace { get; set; }
         public bool HasErrors { get; set; }
         
-        public UrlScan()
+        public Scan()
         {
             this.Rip4 = new List<string>();
             this.Rip6 = new List<object>();

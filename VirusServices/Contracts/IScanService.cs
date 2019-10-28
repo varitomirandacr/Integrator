@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace VirusService.Contracts
 {
-    public interface IUrlScanService
+    public interface IScanService
     {
         Task<string> ScanWebsite(string target);
     }

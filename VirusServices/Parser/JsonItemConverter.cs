@@ -8,9 +8,9 @@ namespace VirusService.Converters
 {
     public class UrlScanParser
     {
-        public static UrlScan Parse(string json)
+        public static Scan Parse(string json)
         {
-            UrlScan urlScan = new UrlScan();
+            Scan urlScan = new Scan();
 
             try
             {

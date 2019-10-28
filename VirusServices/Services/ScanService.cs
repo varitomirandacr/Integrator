@@ -8,7 +8,7 @@ using VirusService.Models;
 
 namespace VirusService.Services
 {
-    public class UrlScanService : IUrlScanService
+    public class ScanService : IScanService
     {
         public async Task<string> ScanWebsite(string target)
         {

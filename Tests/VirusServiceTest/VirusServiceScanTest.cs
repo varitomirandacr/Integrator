@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using VirusService.Converters;
 using VirusService.Models;
 using VirusService.Services;
-using static VirusService.Models.UrlScan;
+using static VirusService.Models.Scan;
 
 namespace VirusServiceTest
 {
@@ -21,7 +21,7 @@ namespace VirusServiceTest
             //string website = "https://urlscan.io/api/verdict/mp3-youtube.download";
             string website = "https://urlscan.io/api/verdict/google.com";
 
-            UrlScanService service = new UrlScanService();
+            ScanService service = new ScanService();
 
             string result = Task.Run(async () =>
             {
@@ -43,7 +43,7 @@ namespace VirusServiceTest
             //string website = "http://www.google.com";
             string website = "www.google.com";
 
-            UrlScanService service = new UrlScanService();
+            ScanService service = new ScanService();
             
             try
             {
