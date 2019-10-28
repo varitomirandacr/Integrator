@@ -33,7 +33,7 @@ namespace NetworkService.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Network/something
+        // GET: api/Network/target
         [HttpGet("{target}", Name = "Get")]
         public async Task<NetworkReply> Get(string target)
         {

@@ -3,26 +3,20 @@ using Infrastructure.Extensions;
 using System;
 using System.Threading.Tasks;
 using VirusService.Contracts;
+using VirusService.Models;
+using VirusService.Parsers;
 
 namespace VirusService.Services
 {
     public class ScanService : IScanService, IRequestService
     {
-        public async Task<string> ScanWebsite(string target)
+        public async Task<Scan> ScanWebsite(string target)
         {
             target.ValidateUrl(out Uri result);
 
-            return await this.SendHttpRequestAsync<string>(result);
-            //using (var client = new System.Net.Http.HttpClient())
-            //{
-            //    var request = new System.Net.Http.HttpRequestMessage
-            //    {
-            //        RequestUri = new Uri(result.AbsoluteUri)
-            //    };
+            var json = await this.SendHttpRequestAsync(result);
 
-            //    var response = await client.SendAsync(request);
-            //    return await response.Content.ReadAsStringAsync();
-            //}
+            return JsonScanParser.Parse(json);
         }
     }
 }

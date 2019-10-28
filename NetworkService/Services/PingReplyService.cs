@@ -1,5 +1,7 @@
 ﻿using Infrastructure.Contracts;
 using Infrastructure.Extensions;
+using Infrastructure.Models;
+using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
 using NetworkService.Model;
 using System;
@@ -12,6 +14,13 @@ namespace NetworkService.Services
 {
     public class PingReplyService : IPingReplyService, IRequestService, INetworkFacadeService
     {
+        protected readonly IOptions<AppSettings> _settings;
+
+        public PingReplyService(IOptions<AppSettings> settings)
+        {
+            _settings = settings;
+        }
+
         /// <summary>
         /// https://edi.wang/post/2017/11/6/use-icmp-ping-in-netcore-20
         /// </summary>
@@ -58,19 +67,11 @@ namespace NetworkService.Services
         /// <returns></returns>
         public async Task<string> QueryDns(string target)
         {
-            target.ValidateUrl(out Uri result);
+            var targetHost = $"{_settings.Value.QueryDnsUrl}{target}";
 
-            return await this.SendHttpRequestAsync<string>(result);
-            //using (var client = new System.Net.Http.HttpClient())
-            //{
-            //    var request = new System.Net.Http.HttpRequestMessage
-            //    {
-            //        RequestUri = new Uri(result.AbsoluteUri)
-            //    };
+            targetHost.ValidateUrl(out Uri result);
 
-            //    var response = await client.SendAsync(request);
-            //    return await response.Content.ReadAsStringAsync();
-            //}
+            return await this.SendHttpRequestAsync(result);
         }
     }
 }

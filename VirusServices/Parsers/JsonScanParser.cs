@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using VirusService.Models;
 
 [assembly: InternalsVisibleTo("VirusServiceTest")]
-namespace VirusService.Converters
+namespace VirusService.Parsers
 {
     public class JsonScanParser
     {

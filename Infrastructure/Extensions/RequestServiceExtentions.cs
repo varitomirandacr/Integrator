@@ -22,7 +22,7 @@ namespace Infrastructure.Extensions
             }
         }
 
-        public static async Task<T> SendHttpRequestAsync<T>(this IRequestService service, Uri uri) where T : class
+        public static async Task<string> SendHttpRequestAsync(this IRequestService service, Uri uri)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -32,9 +32,8 @@ namespace Infrastructure.Extensions
                 };
 
                 var response = await client.SendAsync(request);
-                var result = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
 
-                return result;
+                return await response.Content.ReadAsStringAsync();
             }
         }
 
