@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Dockerfile1.original" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ChilkatDnCore" Version="9.5.0.79" />
     <PackageReference Include="DnsClient" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

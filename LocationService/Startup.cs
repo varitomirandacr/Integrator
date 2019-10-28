@@ -1,14 +1,20 @@
-﻿using Infrastructure.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Infrastructure.Models;
+using LocationService.Contract;
+using LocationService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using VirusService.Contracts;
-using VirusService.Services;
 
-namespace VirusService
+namespace LocationService
 {
     public class Startup
     {
@@ -24,14 +30,14 @@ namespace VirusService
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "VirusScanService Api", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "LocationService Api", Version = "v1" });
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings")); 
 
-            services.AddScoped<IScanService, ScanService>();
+            services.AddScoped<IGeoIpService, GeoIpService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,19 +47,13 @@ namespace VirusService
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "VirusScanService Api V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "LocationService Api V1");
             });
         }
     }

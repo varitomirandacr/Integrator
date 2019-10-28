@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
 using NetworkService.Model;
 using NetworkService.Services;
@@ -13,12 +15,13 @@ namespace NetworkService.Controllers
     [ApiController]
     public class NetworkController : ControllerBase
     {
+        protected readonly IDnsLookupService _dnsLookupService;
+        protected readonly IPingReplyService _pingReplyService;
+        protected readonly IOptions<AppSettings> _settings;
 
-        private readonly IDnsLookupService _dnsLookupService;
-        private readonly IPingReplyService _pingReplyService;
-
-        public NetworkController(IDnsLookupService dnsLookupService, IPingReplyService pingReplyService)
+        public NetworkController(IOptions<AppSettings> settings, IDnsLookupService dnsLookupService, IPingReplyService pingReplyService)
         {
+            _settings = settings;
             _dnsLookupService = dnsLookupService;
             _pingReplyService = pingReplyService;
         }
@@ -38,7 +41,7 @@ namespace NetworkService.Controllers
 
             try
             {
-                reply = await (this._pingReplyService ?? new PingReplyService()).ExecuteICMP(target);
+                reply = await this._pingReplyService.ExecuteICMP(target);
             }
             catch (PingException pex)
             {
@@ -92,6 +95,13 @@ namespace NetworkService.Controllers
             }
 
             return lookup;
+        }
+
+        [HttpGet]
+        [Route("[action]/{target}")]
+        public async Task<string> QueryDns(string target)
+        {
+            return await this._pingReplyService.QueryDns(target);
         }
     }
 }

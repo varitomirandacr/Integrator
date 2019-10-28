@@ -2,13 +2,16 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using VirusService.Models;
 
+[assembly: InternalsVisibleTo("VirusServiceTest")]
 namespace VirusService.Converters
 {
-    public class UrlScanParser
+    public class JsonScanParser
     {
-        public static Scan Parse(string json)
+        internal static Scan Parse(string json)
         {
             Scan urlScan = new Scan();
 
@@ -35,23 +38,20 @@ namespace VirusService.Converters
                 // Properties
                 urlScan.Title = obj.Property("title").Value.ToString();
                 urlScan.Term = obj.Property("term").Value.ToString();
+                
+                IterateJsonProperty(obj, urlScan.Rip4, "rip4");
 
-                foreach (var item in obj.Property("rip4").Children())
-                {
-                    urlScan.Rip4.Add(item.First.ToString());
-                }
-
-                foreach (var item in obj.Property("rip6").Children())
-                {
-                    urlScan.Rip6.Add(item.First?.ToString());
-                }
+                IterateJsonProperty(obj, urlScan.Rip6, "rip6");
+                //foreach (var item in obj.Property("rip6").Children())
+                //{
+                //    urlScan.Rip6.Add(item.First?.ToString());
+                //}
 
                 urlScan.Tld = obj.Property("tld").Value.ToString();
                 urlScan.Fieldname = obj.Property("fieldname").Value.ToString();
                 urlScan.Headline = obj.Property("headline").Value.ToString();
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 urlScan.ErrorMessage = ex?.Message;
                 urlScan.StackTrace = ex?.StackTrace;
@@ -59,6 +59,14 @@ namespace VirusService.Converters
             }
 
             return urlScan;
+        }
+
+        private static void IterateJsonProperty(JObject obj, List<string> items, string propName)
+        {
+            foreach (var item in obj.Property(propName).Children())
+            {
+                items.Add(item.First?.ToString());
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace VirusService.Models
         public string Title { get; set; }
         public string Term { get; set; }
         public List<string> Rip4 { get; set; }
-        public List<object> Rip6 { get; set; }
+        public List<string> Rip6 { get; set; }
         public string Tld { get; set; }
         public string Fieldname { get; set; }
         public string Headline { get; set; }
@@ -27,7 +27,7 @@ namespace VirusService.Models
         public Scan()
         {
             this.Rip4 = new List<string>();
-            this.Rip6 = new List<object>();
+            this.Rip6 = new List<string>();
         }
     }
 

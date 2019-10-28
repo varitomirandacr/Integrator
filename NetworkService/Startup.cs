@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DnsClient;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,8 @@ namespace NetworkService
             {
                 c.SwaggerDoc("v1", new Info { Title = "NetworkService Api", Version = "v1" });
             });
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddScoped<IDnsLookupService, DnsLookupService>();
             services.AddScoped<IPingReplyService, PingReplyService>();

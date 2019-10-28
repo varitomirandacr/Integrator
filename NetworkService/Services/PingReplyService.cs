@@ -1,4 +1,6 @@
-﻿using NetworkService.Contracts;
+﻿using Infrastructure.Contracts;
+using Infrastructure.Extensions;
+using NetworkService.Contracts;
 using NetworkService.Model;
 using System;
 using System.Net.NetworkInformation;
@@ -8,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace NetworkService.Services
 {
-    public class PingReplyService : IPingReplyService, INetworkFacadeService
+    public class PingReplyService : IPingReplyService, IRequestService, INetworkFacadeService
     {
-        public NetworkReply Reply { get; set; }
-
+        /// <summary>
+        /// https://edi.wang/post/2017/11/6/use-icmp-ping-in-netcore-20
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public async Task<NetworkReply> ExecuteICMP(string target)
         {
             using (Ping pingSender = new Ping())
@@ -42,6 +47,30 @@ namespace NetworkService.Services
                 
                 return network;
             }
+        }
+
+        // https://dns.google.com/resolve?name=bing.com&type=A
+
+        /// <summary>
+        /// https://dns.google.com/
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public async Task<string> QueryDns(string target)
+        {
+            target.ValidateUrl(out Uri result);
+
+            return await this.SendHttpRequestAsync<string>(result);
+            //using (var client = new System.Net.Http.HttpClient())
+            //{
+            //    var request = new System.Net.Http.HttpRequestMessage
+            //    {
+            //        RequestUri = new Uri(result.AbsoluteUri)
+            //    };
+
+            //    var response = await client.SendAsync(request);
+            //    return await response.Content.ReadAsStringAsync();
+            //}
         }
     }
 }

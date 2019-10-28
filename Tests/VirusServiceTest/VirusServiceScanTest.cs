@@ -30,7 +30,7 @@ namespace VirusServiceTest
             .GetAwaiter()
             .GetResult();
 
-            var urlScan = UrlScanParser.Parse(result);
+            var urlScan = JsonScanParser.Parse(result);
 
             Assert.IsNotNull(urlScan);
             Assert.IsFalse(urlScan.HasErrors);
