@@ -26,7 +26,8 @@ namespace NetworkService.Services
             socket.UnlockComponent("unlock_code");
 
             int milliseconds = 10000;
-            var address = await Task.Run(() => { return socket.DnsLookupAsync(target, milliseconds).GetResultString(); });
+
+            var address = await Task.Run(() => { return socket.DnsLookup(target, milliseconds); });
 
             var networkDnsQueryLookup = new NetworkDnsQueryLookup
             {

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
 using NetworkService.Model;
 using NetworkService.Models;
+using NetworkService.Parsers;
 using System;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -72,7 +73,9 @@ namespace NetworkService.Services
 
             targetHost.ValidateUrl(out Uri result);
 
-            return await this.SendHttpRequestAsync<NetworkDnsResolver>(result);
+            var response = await this.SendHttpRequestAsync(result);
+
+            return JsonDnsResolverParser.Parse(response);
         }
     }
 }

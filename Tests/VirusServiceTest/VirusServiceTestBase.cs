@@ -2,15 +2,18 @@
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace IntegratorTest
+namespace VirusServiceTest
 {
-    public abstract class TestBase
+    public abstract class VirusServiceTestBase
     {
         protected MockRepository MockRepository { get; private set; }
         protected Mock<IOptions<AppSettings>> MockAppSettings;
 
-        public TestBase()
+        public VirusServiceTestBase()
         {
             MockRepository = new MockRepository(MockBehavior.Strict) { DefaultValue = DefaultValue.Empty };
 
