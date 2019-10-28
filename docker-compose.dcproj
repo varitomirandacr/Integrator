@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Windows</DockerTargetOS>
-    <ProjectGuid>4ad85865-9e8f-42b4-8808-661f7c8b46a3</ProjectGuid>
+    <ProjectGuid>923d5b6c-b983-4bd1-82f5-0a024d4305bb</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}</DockerServiceUrl>
     <DockerServiceName>integrator</DockerServiceName>

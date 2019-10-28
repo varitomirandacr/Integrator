@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkServiceTest", "Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DB5F4C7C-FE77-4142-9105-793D1B2319EA}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4AD85865-9E8F-42B4-8808-661F7C8B46A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirusServiceTest", "Tests\VirusServiceTest\VirusServiceTest.csproj", "{B38A6140-D25C-4844-AEC2-F66C3D9A3133}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{923D5B6C-B983-4BD1-82F5-0A024D4305BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,16 +45,21 @@ Global
 		{DB5F4C7C-FE77-4142-9105-793D1B2319EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB5F4C7C-FE77-4142-9105-793D1B2319EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB5F4C7C-FE77-4142-9105-793D1B2319EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4AD85865-9E8F-42B4-8808-661F7C8B46A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38A6140-D25C-4844-AEC2-F66C3D9A3133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38A6140-D25C-4844-AEC2-F66C3D9A3133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38A6140-D25C-4844-AEC2-F66C3D9A3133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38A6140-D25C-4844-AEC2-F66C3D9A3133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{923D5B6C-B983-4BD1-82F5-0A024D4305BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923D5B6C-B983-4BD1-82F5-0A024D4305BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923D5B6C-B983-4BD1-82F5-0A024D4305BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923D5B6C-B983-4BD1-82F5-0A024D4305BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ADA964B7-2F8C-4D9A-B97B-CFC33188149E} = {13563880-4F91-45FB-89FD-38592281D192}
+		{B38A6140-D25C-4844-AEC2-F66C3D9A3133} = {13563880-4F91-45FB-89FD-38592281D192}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CBA7C9D-D822-4214-A2A9-AD8EAF491912}

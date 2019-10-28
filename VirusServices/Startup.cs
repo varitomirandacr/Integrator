@@ -11,8 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using VirusService.Models;
 
-namespace VirusServices
+namespace VirusService
 {
     public class Startup
     {
@@ -28,10 +29,12 @@ namespace VirusServices
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Values Api", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "VirusScanService Api", Version = "v1" });
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +56,7 @@ namespace VirusServices
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Values Api V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "VirusScanService Api V1");
             });
         }
     }

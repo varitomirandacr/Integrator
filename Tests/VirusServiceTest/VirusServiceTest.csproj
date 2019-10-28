@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NetworkService\NetworkService.csproj" />
     <ProjectReference Include="..\..\VirusServices\VirusServices.csproj" />
   </ItemGroup>
 
