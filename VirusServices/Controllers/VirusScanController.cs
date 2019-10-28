@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VirusService.Contracts;
@@ -28,13 +29,23 @@ namespace VirusService.Controllers
             return new string[] { "value1", "value2", this._settings.Value.VirusScanUrl };
         }
 
-        // GET: api/VirusScan/5
+        // GET: api/VirusScan/target
         [HttpGet("{target}", Name = "Get")]
         public async Task<Scan> Get(string target)
         {
-            string targetHost = $"{this._settings.Value.VirusScanUrl}{target}";
+            Scan scan = new Scan();
 
-            return await this._urlScanService.ScanWebsite(targetHost);
+            try
+            {
+                scan = await this._urlScanService.ScanWebsite(target);
+            }
+            catch (Exception ex)
+            {
+                scan.Message = ex.Message;
+                scan.StackTrace = ex.StackTrace;
+            }
+
+            return scan;
         }
     }
 }

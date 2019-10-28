@@ -1,17 +1,27 @@
-﻿using System;
+﻿using Infrastructure.Contracts;
+using System;
 using System.Collections.Generic;
 
 namespace VirusService.Models
 {
-    public class Scan
+    public class Scan : IEntityService
     {
         public string Title { get; set; }
         public string Term { get; set; }
-        public List<string> Rip4 { get; set; }
-        public List<string> Rip6 { get; set; }
         public string Tld { get; set; }
         public string Fieldname { get; set; }
         public string Headline { get; set; }
+        public bool HasErrors { get; set; }
+
+        public List<string> Rip4 { get; set; }
+        public List<string> Rip6 { get; set; }
+
+        #region IEntityService Implementation
+
+        public string Message { get; set; }
+        public string StackTrace { get; set; }
+
+        #endregion
 
         public CountryInfo CountryInfo { get; set; }
         public Geoip Geoip { get; set; }
@@ -19,10 +29,6 @@ namespace VirusService.Models
         public WhoisJson WhoisJson { get; set; }
         public Verdict Verdict { get; set; }
         public Gsb Gsb { get; set; }
-
-        public string ErrorMessage{ get; set; }
-        public string StackTrace { get; set; }
-        public bool HasErrors { get; set; }
         
         public Scan()
         {

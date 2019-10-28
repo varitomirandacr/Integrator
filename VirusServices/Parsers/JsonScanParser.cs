@@ -53,7 +53,7 @@ namespace VirusService.Parsers
             }
             catch (Exception ex)
             {
-                urlScan.ErrorMessage = ex?.Message;
+                urlScan.Message = ex?.Message;
                 urlScan.StackTrace = ex?.StackTrace;
                 urlScan.HasErrors = true;
             }
