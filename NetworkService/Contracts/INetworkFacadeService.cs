@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NetworkService.Contracts
 {
-    interface INetworkFacadeService : IIntegratorService
+    interface INetworkFacadeService
     {
         Task<NetworkReply> ExecuteICMP(string target);
     }

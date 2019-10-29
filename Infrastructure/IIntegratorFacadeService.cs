@@ -6,6 +6,6 @@ namespace Infrastructure
 {
     interface IIntegratorFacadeService
     {
-        void ExecuteServices<T>(List<T> services);
+        void ExecuteService<T>(List<T> services);
     }
 }
