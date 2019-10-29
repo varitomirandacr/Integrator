@@ -20,13 +20,11 @@ namespace Integrator.Controllers
     {
         protected readonly IIntegratorService _integratorService;
         protected readonly IOptions<Endpoints> _endpoints;
-        private readonly IHttpClientFactory _clientFactory;
 
-        public HomeController(IOptions<Endpoints> endpoints, IIntegratorService integratorService, IHttpClientFactory clientFactory)
+        public HomeController(IOptions<Endpoints> endpoints, IIntegratorService integratorService)
         {
             _endpoints = endpoints;
             _integratorService = integratorService;
-            _clientFactory = clientFactory;
         }
 
         public async Task<IActionResult> Index()
@@ -35,25 +33,6 @@ namespace Integrator.Controllers
 
             string targetHost = "google.com";
             
-            //var request = new System.Net.Http.HttpRequestMessage(HttpMethod.Get, new Uri("http://locationservice20191027105615.azurewebsites.net/api/GeoLocation/google.com"));
-            ////var request = new System.Net.Http.HttpRequestMessage(HttpMethod.Get, new Uri("https://localhost:44313/api/network"));
-            //request.Headers.Add("Accept", "application/json");
-            //request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
-
-            ////var client = _clientFactory.CreateClient();
-
-            //var client = new HttpClient(new WinHttpHandler() { WindowsProxyUsePolicy = WindowsProxyUsePolicy.UseWinInetProxy });
-            //var response = await client.SendAsync(request); // request.RequestUri.AbsoluteUri);
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var test = await response.Content.ReadAsStringAsync();
-            //}
-            //else
-            //{
-            //    //
-            //    var test2 = "";
-            //}
-
             var result = await this._integratorService.ExecuteServices(targetHost, null);
 
             return View();
