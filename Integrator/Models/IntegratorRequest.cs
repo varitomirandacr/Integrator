@@ -14,8 +14,5 @@ namespace Integrator.Models
         public string RequestUrl { get; set; }
 
         public Func<string, Task<string>> ExecuteService { get; set; }
-
-        public Action<string, List<string>> ExecuteAction { get; set; }
-
     }
 }

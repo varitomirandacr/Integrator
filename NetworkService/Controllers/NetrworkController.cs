@@ -7,6 +7,7 @@ using NetworkService.Models;
 using NetworkService.Services;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
@@ -57,6 +58,42 @@ namespace NetworkService.Controllers
             }
 
             return reply;
+        }
+
+        // GET: api/Network/ipresolver/target
+        [HttpGet]
+        [Route("[action]/{target}")]
+        public async Task<NetworkIpResolver> IPResolver(string target)
+        {
+            NetworkIpResolver resolver = new NetworkIpResolver();
+
+            try
+            {
+                if (!IPAddress.TryParse(target, out IPAddress ipAddress))
+                {
+                    throw new Exception("Invalid IP address");
+                }
+
+                resolver = await this._pingReplyService.ExecuteIPAddressResolver(target);
+            }
+            catch (Exception ex)
+            {
+                resolver.Message = ex.InnerException.Message;
+                resolver.StackTrace = ex.InnerException.StackTrace;
+            }
+
+            return resolver;
+        }
+
+        // GET: api/Network/gethostname/target
+        [HttpGet]
+        [Route("[action]/{target}")]
+        public async Task<string> GetHostname(string target)
+        {
+            // Example 54.172.75.131 / ec2-54-172-75-131.compute-1.amazonaws.com
+            NetworkIpResolver resolver = new NetworkIpResolver();
+            resolver = await this.IPResolver(target);
+            return resolver.HostName;
         }
 
         // GET: api/Network/dnsresolver/target

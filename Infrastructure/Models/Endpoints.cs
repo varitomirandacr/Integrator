@@ -9,9 +9,10 @@ namespace Infrastructure.Models
         public string Icmp { get; set; }
         public string DnsResolver { get; set; }
         public string DnsChilkat { get; set; }
-        public string DnsLookcup { get; set; }
+        public string DnsLookup { get; set; }
         public string Geoip { get; set; }
         public string VirusScan { get; set; }
+        public object DefaultTarget { get; set; }
 
         public object this[string propertyName]
         {

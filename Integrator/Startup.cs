@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetworkService.Contracts;
 using NetworkService.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Integrator
 {
@@ -33,8 +34,8 @@ namespace Integrator
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                  builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+
             }).AddMvc(options =>
             {
                 options.CacheProfiles.Add("Default",
@@ -58,13 +59,27 @@ namespace Integrator
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<Endpoints>(Configuration.GetSection("Endpoints"));
+            //services.Configure<Endpoints>(options =>
+            //{
+            //    options.DefaultTarget = Configuration.GetValue<string>("DefaultTarget");
+            //    options.Icmp = Configuration.GetSection("Endpoints").GetValue<string>("Icmp");
+            //    options.DnsResolver = Configuration.GetSection("Endpoints").GetValue<string>("DnsResolver");
+            //    options.DnsChilkat = Configuration.GetSection("Endpoints").GetValue<string>("DnsChilkat");
+            //    options.DnsLookup = Configuration.GetSection("Endpoints").GetValue<string>("DnsLookup");
+            //    options.Geoip = Configuration.GetSection("Endpoints").GetValue<string>("Geoip");
+            //    options.VirusScan = Configuration.GetSection("Endpoints").GetValue<string>("VirusScan");
+            //});
 
             services.AddScoped<IIntegratorService, IntegratorService>();
-
             services.AddScoped<IDnsLookupService, DnsLookupService>();
             services.AddScoped<IPingReplyService, PingReplyService>();
             
             services.AddHttpClient();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Integrator Service Api", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +108,12 @@ namespace Integrator
             });
 
             app.UseCors();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Integrator Service Api V1");
+            });
+
         }
     }
 }

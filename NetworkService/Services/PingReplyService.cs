@@ -7,6 +7,7 @@ using NetworkService.Model;
 using NetworkService.Models;
 using NetworkService.Parsers;
 using System;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace NetworkService.Services
 {
-    public class PingReplyService : IPingReplyService, IRequestService, INetworkFacadeService
+    public class PingReplyService : IPingReplyService, IRequestService
     {
         protected readonly IOptions<AppSettings> _settings;
 
@@ -76,6 +77,30 @@ namespace NetworkService.Services
             var response = await this.SendHttpRequestAsync(result);
 
             return JsonDnsResolverParser.Parse(response);
+        }
+
+        public async Task<NetworkIpResolver> ExecuteIPAddressResolver(string ipAddress)
+        {
+            NetworkIpResolver resolver = new NetworkIpResolver();
+            resolver.IP = ipAddress;
+                        
+            await Task.Run(() =>
+            {
+                try
+                {
+                    // Example "54.172.75.131"
+                    IPHostEntry ipToDomain = Dns.GetHostEntry(ipAddress);
+                    resolver.HostName = ipToDomain.HostName;
+                }
+                catch (Exception ex)
+                {
+                    resolver.HostName = "Unknown";
+                    resolver.Message = ex?.Message;
+                    resolver.StackTrace = ex?.StackTrace;
+                }
+            });           
+
+            return resolver;
         }
     }
 }

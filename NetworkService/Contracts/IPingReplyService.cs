@@ -12,5 +12,6 @@ namespace NetworkService.Contracts
     {
         Task<NetworkReply> ExecuteICMP(string target);
         Task<NetworkDnsResolver> ExecuteDnsResolver(string target);
+        Task<NetworkIpResolver> ExecuteIPAddressResolver(string ipAddress);
     }
 }

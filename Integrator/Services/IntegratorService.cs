@@ -2,7 +2,6 @@
 using Integrator.Contracts;
 using Integrator.Models;
 using Microsoft.Extensions.Options;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +26,8 @@ namespace Integrator.Services
 
             try
             {
-                await Task.Run(() => { 
-
+                await Task.Run(() => 
+                { 
                     var requests = GetProperties(target, services).ToList();
 
                     Parallel.ForEach(requests, serv =>
@@ -44,27 +43,28 @@ namespace Integrator.Services
             }
             return payload;
         }
-
+        
         private IEnumerable<IIntegratorRequest> GetProperties(string target, List<string> services)
         {
+            var exclusions = new[] { "DefaultTarget" };
+
             IEnumerable<PropertyInfo> props = typeof(Endpoints).GetProperties();
 
-            Func<PropertyInfo, bool> filterFunc = (services == null)
+            Func<PropertyInfo, bool> filterFunc = (services == null || services.Count == 0)
                 ? new Func<PropertyInfo, bool>(x => x.PropertyType.Name != "Object")
-                : new Func<PropertyInfo, bool>(x => services.Contains(x.Name) && x.PropertyType.Name != "Object");
+                : new Func<PropertyInfo, bool>(x => services.Contains(x.Name.ToLower()) && x.PropertyType.Name != "Object");
 
             var requests = props.Where(filterFunc);
 
             return requests.Select(p => new IntegratorRequest
             {
                 ServiceName = p.Name,
-                RequestUrl = $"{this._endpoints.Value[p.Name] as string}{target}",
+                RequestUrl = $"{_endpoints.Value[p.Name] as string}{target}",
                 ExecuteService = async (x) => { return await RequestClient(x); },
-                // ExecuteAction = (x, list) => RequestClient(x, list)
             });
         }
         
-        public static async Task<string> RequestClient(string target)
+        public async Task<string> RequestClient(string target)
         {
             // Testing URLs
             // http://locationservice20191027105615.azurewebsites.net/api/GeoLocation/google.com
