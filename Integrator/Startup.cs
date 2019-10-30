@@ -59,17 +59,7 @@ namespace Integrator
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<Endpoints>(Configuration.GetSection("Endpoints"));
-            //services.Configure<Endpoints>(options =>
-            //{
-            //    options.DefaultTarget = Configuration.GetValue<string>("DefaultTarget");
-            //    options.Icmp = Configuration.GetSection("Endpoints").GetValue<string>("Icmp");
-            //    options.DnsResolver = Configuration.GetSection("Endpoints").GetValue<string>("DnsResolver");
-            //    options.DnsChilkat = Configuration.GetSection("Endpoints").GetValue<string>("DnsChilkat");
-            //    options.DnsLookup = Configuration.GetSection("Endpoints").GetValue<string>("DnsLookup");
-            //    options.Geoip = Configuration.GetSection("Endpoints").GetValue<string>("Geoip");
-            //    options.VirusScan = Configuration.GetSection("Endpoints").GetValue<string>("VirusScan");
-            //});
-
+            
             services.AddScoped<IIntegratorService, IntegratorService>();
             services.AddScoped<IDnsLookupService, DnsLookupService>();
             services.AddScoped<IPingReplyService, PingReplyService>();

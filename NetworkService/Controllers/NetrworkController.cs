@@ -30,9 +30,9 @@ namespace NetworkService.Controllers
 
         // GET: api/Network
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetNetwork()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "This is the Network Service" };
         }
 
         // GET: api/Network/icmp/target

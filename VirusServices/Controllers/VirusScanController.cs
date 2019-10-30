@@ -24,9 +24,9 @@ namespace VirusService.Controllers
 
         // GET: api/Network
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetVirusService()
         {
-            return new string[] { "value1", "value2", this._settings.Value.VirusScanUrl };
+            return new string[] { this._settings.Value.VirusScanUrl };
         }
 
         // GET: api/VirusScan/target

@@ -26,13 +26,13 @@ namespace LocationService.Controllers
 
         // GET: api/GeoLocation
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetGeoLocation()
         {
-            return new string[] { "value1", "value2", this._settings.Value.GeoIpUrl };
+            return new string[] { this._settings.Value.GeoIpUrl };
         }
 
-        // GET: api/GeoLocation/5
-        [HttpGet("{target}", Name = "Get")]
+        // GET: api/GeoLocation/target
+        [HttpGet("{target}")]
         public async Task<Location> Get(string target)
         {
             var targetHost = $"{_settings.Value.GeoIpUrl}{target}{_settings.Value.GeoIpAccessKey}";
