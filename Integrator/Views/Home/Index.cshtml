@@ -2,42 +2,52 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Enter the IP or Domain you'd like to analyze</p>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Enter the IP or Domain you'd like to analyze</p>
 
-    <div class="row">
-        <div class="col-lg-4"></div>
-        <div class="col-lg-4">
-            <div class="input-group">
-                <input class="form-control" type="text" id="domain" placeholder="Empty will search for google.com" />
-                <div class="input-group-btn">
-                    <button class="btn btn-default" id="getjsondata" onclick="getData()" style="border: 1px solid #ccc">Start</button>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="domain" placeholder="Empty will search for google.com" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="getjsondata" onclick="getData()" style="border: 1px solid #ccc">Start</button>
+                    </div>
                 </div>
             </div>
+            <div class="col-lg-4"></div>
         </div>
-        <div class="col-lg-4"></div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <input class="check" type="checkbox" data-name="icmp" id="chkIcmp" /> Icmp
-            <input class="check" type="checkbox" data-name="dnsresolver" id="chkDnsResolver" /> Dns Resolver
-            <input class="check" type="checkbox" data-name="dnschilkat" id="chkDnsChilkat" /> Dns Lookup (Chilkat API)
-            <input class="check" type="checkbox" data-name="dnslookup" id="chkDnsLookup" /> Dns Lookup
-            <input class="check" type="checkbox" data-name="geoip" id="chkGeoip" /> GeoIP
-            <input class="check" type="checkbox" data-name="virusscan" id="chkVirusScan" /> Virus Scan
+        <div class="row">
+            <div class="col-lg-12">
+                <input class="check" type="checkbox" data-name="icmp" id="chkIcmp" /> Icmp
+                <input class="check" type="checkbox" data-name="dnsresolver" id="chkDnsResolver" /> Dns Resolver
+                <input class="check" type="checkbox" data-name="dnschilkat" id="chkDnsChilkat" /> Dns Lookup (Chilkat API)
+                <input class="check" type="checkbox" data-name="dnslookup" id="chkDnsLookup" /> Dns Lookup
+                <input class="check" type="checkbox" data-name="geoip" id="chkGeoip" /> GeoIP
+                <input class="check" type="checkbox" data-name="virusscan" id="chkVirusScan" /> Virus Scan
+            </div>
         </div>
-    </div>
-    <hr />
-    <br />
-    <br />
-    <div id="content" class="container-fluid"></div>
-    <script>
+        <hr />
+        <br />
+        <br />
+        <div class="row">
+            @*<div class="col-lg-4"></div>
+            <div class="col-lg-4">*@
+                <div id="divloader" class="loader" style="display:none; margin: 0 auto;"></div>
+            @*</div>*@
+            @*<div class="col-lg-4"></div>*@
+        </div>
+        <div id="content" class="container-fluid"></div>
+        <script>
 
         var table = "";
         var containerContent = "";
 
         function getData() {
+
+            var elem = document.getElementById('divloader');
+            elem.style.display = "block";
 
             const divContainer = document.getElementById("content");
             divContainer.innerHTML = "";
@@ -45,16 +55,14 @@
             let services = Array.from(document.getElementsByClassName("check"))
                 .filter(p => p.checked)
                 .map(x => x.dataset.name);
-           
+
             $.get("@Url.Action("Data","Home")",
                 {
                     value: document.getElementById("domain").value,
                     items: JSON.stringify(services)
                 },
                 function (data) {
-
-                    debugger;
-
+                    
                     containerContent = "";
 
                     // Title hostname
@@ -69,8 +77,9 @@
                         table += '<br/></hr>';
                         containerContent += table;
                     }
-                    
+
                     divContainer.innerHTML += containerContent;
+                    elem.style.display = "none";
                 }
             );
         }
@@ -98,6 +107,6 @@
             })
             return mainMapping;
         }
-    </script>
+        </script>
 
-</div>
+    </div>
