@@ -30,12 +30,12 @@ namespace NetworkService.Controllers
         }
 
         // GET: api/Network
-        [HttpGet]
-        [RateLimitFilter(Name = "Rate Limit", Seconds = 10)]
-        public IEnumerable<string> GetNetwork()
-        {
-            return new string[] { "This is the Network Service" };
-        }
+        //[HttpGet]
+        //[RateLimitFilter(Name = "Rate Limit", Seconds = 10)]
+        //public IEnumerable<string> GetNetwork()
+        //{
+        //    return new string[] { "This is the Network Service" };
+        //}
 
         // GET: api/Network/icmp/target
         [HttpGet]

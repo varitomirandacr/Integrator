@@ -30,21 +30,21 @@ namespace RestIntegrator.Controllers
         }
 
         // GET api/main
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            var values =  new string[2];
+        //[HttpGet]
+        //public ActionResult<IEnumerable<string>> Get()
+        //{
+        //    var values =  new string[2];
 
-            try
-            {
-                values = new[]{ "value1", "value2" };
-            }
-            catch(Exception ex)
-            {
-                var test = ex.Message;
-            }
-            return values;
-        }
+        //    try
+        //    {
+        //        values = new[]{ "value1", "value2" };
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        var test = ex.Message;
+        //    }
+        //    return values;
+        //}
 
         [HttpGet]
         [Route("[action]/{target}/{items}")]

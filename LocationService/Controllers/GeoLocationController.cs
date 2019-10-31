@@ -25,12 +25,12 @@ namespace LocationService.Controllers
             _geoIpService = geoIpService;
         }
 
-        // GET: api/GeoLocation
-        [HttpGet]
-        public IEnumerable<string> GetGeoLocation()
-        {
-            return new string[] { this._settings.Value.GeoIpUrl };
-        }
+        //// GET: api/GeoLocation
+        //[HttpGet]
+        //public IEnumerable<string> GetGeoLocation()
+        //{
+        //    return new string[] { this._settings.Value.GeoIpUrl };
+        //}
 
         // GET: api/GeoLocation/target
         [HttpGet("{target}")]

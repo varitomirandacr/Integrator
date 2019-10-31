@@ -24,11 +24,11 @@ namespace VirusService.Controllers
         }
 
         // GET: api/Network
-        [HttpGet]
-        public IEnumerable<string> GetVirusService()
-        {
-            return new string[] { this._settings.Value.VirusScanUrl };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> GetVirusService()
+        //{
+        //    return new string[] { this._settings.Value.VirusScanUrl };
+        //}
 
         // GET: api/VirusScan/target
         [HttpGet("{target}", Name = "Get")]
