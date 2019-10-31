@@ -1,8 +1,5 @@
-﻿using Infrastructure.Contracts;
-using Integrator.Contracts;
+﻿using Integrator.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Integrator.Models

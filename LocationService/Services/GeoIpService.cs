@@ -1,15 +1,8 @@
 ﻿using FreeGeoIPCore.Models;
 using Infrastructure.Contracts;
 using Infrastructure.Extensions;
-using Infrastructure.Models;
-using Infrastructure.Services;
 using LocationService.Contract;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 /// <summary>

@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Models;
-using Integrator.Base;
 using Integrator.Contracts;
 using Integrator.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -55,11 +54,6 @@ namespace Integrator.Controllers
             results.AddRange(await this._integratorService.ExecuteServices(target, services));
 
             return Json(results);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

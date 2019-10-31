@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Infrastructure.Models;
+﻿using Infrastructure.Models;
 using Integrator.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace RestIntegrator.Controllers
 {
@@ -20,7 +19,9 @@ namespace RestIntegrator.Controllers
         protected readonly IOptions<Endpoints> _endpoints;
         protected readonly IIntegratorService _integratorService;
 
-        public MainController(IConfiguration configuration, IOptions<Endpoints> endpoints, IIntegratorService integratorService)
+        public MainController(IConfiguration configuration
+            , IOptions<Endpoints> endpoints
+            , IIntegratorService integratorService)
         {
             _endpoints = endpoints;
             _integratorService = integratorService;
@@ -31,7 +32,17 @@ namespace RestIntegrator.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var values =  new string[2];
+
+            try
+            {
+                values = new[]{ "value1", "value2" };
+            }
+            catch(Exception ex)
+            {
+                var test = ex.Message;
+            }
+            return values;
         }
 
         [HttpGet]
@@ -59,6 +70,5 @@ namespace RestIntegrator.Controllers
 
             return results;
         }
-
     }
 }

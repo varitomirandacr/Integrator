@@ -42,10 +42,6 @@ namespace VirusService.Parsers
                 IterateJsonProperty(obj, urlScan.Rip4, "rip4");
 
                 IterateJsonProperty(obj, urlScan.Rip6, "rip6");
-                //foreach (var item in obj.Property("rip6").Children())
-                //{
-                //    urlScan.Rip6.Add(item.First?.ToString());
-                //}
 
                 urlScan.Tld = obj.Property("tld").Value.ToString();
                 urlScan.Fieldname = obj.Property("fieldname").Value.ToString();

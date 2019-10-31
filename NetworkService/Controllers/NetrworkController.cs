@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Filters;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
@@ -30,6 +31,7 @@ namespace NetworkService.Controllers
 
         // GET: api/Network
         [HttpGet]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10)]
         public IEnumerable<string> GetNetwork()
         {
             return new string[] { "This is the Network Service" };
@@ -38,6 +40,7 @@ namespace NetworkService.Controllers
         // GET: api/Network/icmp/target
         [HttpGet]
         [Route("[action]/{target}")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(NetworkReply))]
         public async Task<NetworkReply> Icmp(string target)
         {
             NetworkReply reply = new NetworkReply();

@@ -64,9 +64,11 @@ namespace NetworkService.Services
                 .FirstOrDefault();
 
             return record;
-        } 
+        }
 
         #endregion
+
+        #region Leaving this here as backup only
 
         /// <summary>
         /// https://www.ryadel.com/en/asp-net-c-helper-class-to-get-web-server-ip-address-and-other-network-related-methods/
@@ -80,8 +82,8 @@ namespace NetworkService.Services
 
         private async Task<IPAddress> GetIPAddress(int num = 0)
         {
-            return await Task.Run(() => 
-            {                
+            return await Task.Run(() =>
+            {
                 return GetIPAddresses()[num];
             });
         }
@@ -94,6 +96,8 @@ namespace NetworkService.Services
         public bool HasIPAddress(string ipAddress)
         {
             return HasIPAddress(IPAddress.Parse(ipAddress));
-        }
+        } 
+
+        #endregion
     }
 }

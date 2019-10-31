@@ -27,3 +27,10 @@ services:
       context: .
       dockerfile: LocationService\Dockerfile
 
+
+  restintegrator:
+    image: ${DOCKER_REGISTRY-}restintegrator
+    build:
+      context: .
+      dockerfile: RestIntegrator\Dockerfile
+

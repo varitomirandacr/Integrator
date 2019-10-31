@@ -46,13 +46,12 @@ namespace Integrator.Services
         
         private IEnumerable<IIntegratorRequest> GetProperties(string target, List<string> services)
         {
-            var exclusions = new[] { "DefaultTarget" };
-
             IEnumerable<PropertyInfo> props = typeof(Endpoints).GetProperties();
 
+            Func<PropertyInfo, bool> propertyObjectFunc = x => x.PropertyType.Name != "Object";
             Func<PropertyInfo, bool> filterFunc = (services == null || services.Count == 0)
-                ? new Func<PropertyInfo, bool>(x => x.PropertyType.Name != "Object")
-                : new Func<PropertyInfo, bool>(x => services.Contains(x.Name.ToLower()) && x.PropertyType.Name != "Object");
+                ? new Func<PropertyInfo, bool>(propertyObjectFunc)
+                : new Func<PropertyInfo, bool>(x => services.Contains(x.Name.ToLower()) && propertyObjectFunc(x));
 
             var requests = props.Where(filterFunc);
 
@@ -75,15 +74,14 @@ namespace Integrator.Services
             request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
 
             var client = new HttpClient(new WinHttpHandler() { WindowsProxyUsePolicy = WindowsProxyUsePolicy.UseWinInetProxy });
-            var response = await client.SendAsync(request); 
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
+
+            var response = await client.SendAsync(request);            
+            if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("An unexpected error prevented the services to be ran");
             }
+
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
