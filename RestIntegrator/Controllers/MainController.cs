@@ -47,7 +47,7 @@ namespace RestIntegrator.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/{value}/{items}")]
+        [Route("[action]/{target}/{items}")]
         [ValidateDomainFilter]
         public async Task<List<string>> Data(string target, string items)
         {

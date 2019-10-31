@@ -58,7 +58,7 @@
 
             $.get("@Url.Action("Data","Home")",
                 {
-                    value: document.getElementById("domain").value,
+                    target: document.getElementById("domain").value,
                     items: JSON.stringify(services)
                 },
                 function (data) {
