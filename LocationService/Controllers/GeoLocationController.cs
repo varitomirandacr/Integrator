@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FreeGeoIPCore.Models;
+using Infrastructure.Filters;
 using Infrastructure.Models;
 using LocationService.Contract;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,8 @@ namespace LocationService.Controllers
 
         // GET: api/GeoLocation/target
         [HttpGet("{target}")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(Location))]
+        [ValidateDomainFilter]
         public async Task<Location> Get(string target)
         {
             var targetHost = $"{_settings.Value.GeoIpUrl}{target}{_settings.Value.GeoIpAccessKey}";

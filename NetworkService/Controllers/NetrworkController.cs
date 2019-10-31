@@ -41,6 +41,7 @@ namespace NetworkService.Controllers
         [HttpGet]
         [Route("[action]/{target}")]
         [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(NetworkReply))]
+        [ValidateDomainFilter]
         public async Task<NetworkReply> Icmp(string target)
         {
             NetworkReply reply = new NetworkReply();
@@ -66,6 +67,8 @@ namespace NetworkService.Controllers
         // GET: api/Network/ipresolver/target
         [HttpGet]
         [Route("[action]/{target}")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(NetworkIpResolver))]
+        [ValidateDomainFilter]
         public async Task<NetworkIpResolver> IPResolver(string target)
         {
             NetworkIpResolver resolver = new NetworkIpResolver();
@@ -102,6 +105,8 @@ namespace NetworkService.Controllers
         // GET: api/Network/dnsresolver/target
         [HttpGet]
         [Route("[action]/{target}")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(NetworkDnsResolver))]
+        [ValidateDomainFilter]
         public async Task<NetworkDnsResolver> DnsResolver(string target)
         {
             NetworkDnsResolver resolver = new NetworkDnsResolver();
@@ -122,6 +127,8 @@ namespace NetworkService.Controllers
         // GET: api/Network/dnschilkatlookup/target
         [HttpGet]
         [Route("[action]/{target}")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(NetworkDnsQueryLookup))]
+        [ValidateDomainFilter]
         public async Task<NetworkDnsQueryLookup> DnsChilkatLookup(string target)
         {
             NetworkDnsQueryLookup lookup = new NetworkDnsQueryLookup();
@@ -142,6 +149,8 @@ namespace NetworkService.Controllers
         // GET: api/Network/dnsclientlookup/target
         [HttpGet]
         [Route("[action]/{target}")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(NetworkDnsClientLookup))]
+        [ValidateDomainFilter]
         public async Task<NetworkDnsClientLookup> DnsClientLookup(string target)
         {
             NetworkDnsClientLookup lookup = new NetworkDnsClientLookup();

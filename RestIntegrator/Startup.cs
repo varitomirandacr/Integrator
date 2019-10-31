@@ -1,13 +1,24 @@
-﻿//using AspNetCoreRateLimit;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
+//using AspNetCoreRateLimit;
 using Infrastructure.Models;
 using Integrator.Contracts;
 using Integrator.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NetworkService.Contracts;
 using NetworkService.Services;
 using RestIntegrator.Filters;
@@ -90,16 +101,28 @@ namespace RestIntegrator
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
-            //app.UseIpRateLimiting();
-
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST Integrator Service Api V1");
             });
 
-            app.UseExceptionHandler();
+            app.UseExceptionHandler(options =>
+            {
+                options.Run(
+                    async context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.ContentType = "text/html";
+                        var ex = context.Features.Get<IExceptionHandlerFeature>();
+                        if (ex != null)
+                        {
+                            var err = $"<h1>Error: {ex.Error.Message}</h1>{ex.Error.StackTrace}";
+                            await context.Response.WriteAsync(err).ConfigureAwait(false);
+                        }
+                    });
+            });
         }
     }
 }

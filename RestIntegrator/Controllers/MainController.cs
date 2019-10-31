@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Filters;
+using Infrastructure.Models;
 using Integrator.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -47,26 +48,27 @@ namespace RestIntegrator.Controllers
 
         [HttpGet]
         [Route("[action]/{value}/{items}")]
-        public async Task<List<string>> Data(string value, string items)
+        [ValidateDomainFilter]
+        public async Task<List<string>> Data(string target, string items)
         {
-            string target = (string.IsNullOrEmpty(value) ? _endpoints.Value.DefaultTarget.ToString() : value).Trim();
+            string targetHost = (string.IsNullOrEmpty(target) ? _endpoints.Value.DefaultTarget.ToString() : target).Trim();
 
-            if (IPAddress.TryParse(value, out IPAddress ipAddress))
+            if (IPAddress.TryParse(target, out IPAddress ipAddress))
             {
                 var resolverHost = this._configuration.GetValue<string>("GetHostname");
                 var getHostname = $"{resolverHost}{ipAddress}";
                 var hostname = await this._integratorService.RequestClient(getHostname);
-                target = JsonConvert.DeserializeObject<string>(hostname);
+                targetHost = JsonConvert.DeserializeObject<string>(hostname);
             }
 
             var services = JsonConvert.DeserializeObject<List<string>>(items);
 
             var results = new List<string>
             {
-                target
+                targetHost
             };
 
-            results.AddRange(await this._integratorService.ExecuteServices(target, services));
+            results.AddRange(await this._integratorService.ExecuteServices(targetHost, services));
 
             return results;
         }

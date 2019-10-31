@@ -31,8 +31,7 @@ namespace Integrator.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> Data(string value, string items)
-        
+        public async Task<JsonResult> Data(string value, string items)        
         {
             string target = (string.IsNullOrEmpty(value) ? _endpoints.Value.DefaultTarget.ToString() : value).Trim();
 
@@ -44,18 +43,18 @@ namespace Integrator.Controllers
                 target = JsonConvert.DeserializeObject<string>(hostname);
             }
 
-            var services = JsonConvert.DeserializeObject<List<string>>(items);
-
             var results = new List<string>
             {
                 target
             };
-
-            results.AddRange(await this._integratorService.ExecuteServices(target, services));
+            
+            var services = JsonConvert.DeserializeObject<List<string>>(items);
+            var executedServices = await this._integratorService.ExecuteServices(target, services);
+            results.AddRange(executedServices);
 
             return Json(results);
         }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

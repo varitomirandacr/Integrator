@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocationServiceTest", "Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestIntegrator", "RestIntegrator\RestIntegrator.csproj", "{26131357-88C5-419E-AC12-992FF2603703}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureTest", "Tests\InfrastructureTest\InfrastructureTest.csproj", "{C9FBD9FA-EEFA-41CB-BCEB-676FBE476233}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{26131357-88C5-419E-AC12-992FF2603703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26131357-88C5-419E-AC12-992FF2603703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26131357-88C5-419E-AC12-992FF2603703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9FBD9FA-EEFA-41CB-BCEB-676FBE476233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9FBD9FA-EEFA-41CB-BCEB-676FBE476233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9FBD9FA-EEFA-41CB-BCEB-676FBE476233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9FBD9FA-EEFA-41CB-BCEB-676FBE476233}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{ADA964B7-2F8C-4D9A-B97B-CFC33188149E} = {13563880-4F91-45FB-89FD-38592281D192}
 		{B38A6140-D25C-4844-AEC2-F66C3D9A3133} = {13563880-4F91-45FB-89FD-38592281D192}
 		{14581BD0-D2B6-464B-B60C-BA64E8068CA0} = {13563880-4F91-45FB-89FD-38592281D192}
+		{C9FBD9FA-EEFA-41CB-BCEB-676FBE476233} = {13563880-4F91-45FB-89FD-38592281D192}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CBA7C9D-D822-4214-A2A9-AD8EAF491912}

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Filters;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -31,6 +32,8 @@ namespace VirusService.Controllers
 
         // GET: api/VirusScan/target
         [HttpGet("{target}", Name = "Get")]
+        [RateLimitFilter(Name = "Rate Limit", Seconds = 10, ObjectType = typeof(Scan))]
+        [ValidateDomainFilter]
         public async Task<Scan> Get(string target)
         {
             Scan scan = new Scan();
